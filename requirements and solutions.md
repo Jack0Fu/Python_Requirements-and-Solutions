@@ -86,7 +86,9 @@ dirname,filename = os.path.split(Image_path)
 ```
 
 #### 5. time
+
 ##### 5.1  获取当前系统时间
+
 /#time #当前时间 
 ```python
 import time
@@ -95,5 +97,91 @@ time.strftime('%Y-%m-%d_%H_%M_%S',time.localtime(time.time()))
 #返回str：'2019-02-24_15_08_44' 
 ```
 
+  
 
-​    
+####  6. 跟txt文件有关的操作
+
+##### 6.1 读取txt(英文段落)，返回一个list
+
+/#txt #re
+
+```python
+import string
+import re
+
+#读取txt,返回单词list
+def read_txt(filename='studentversion.txt'):
+###################################################
+    #将每行数据存入单独的list中
+    # f = open(filename,"r", encoding='utf-8')
+     
+    # lines = f.readlines()#读取全部内容
+     
+    # wordlist = []  ## 空列表, 将第i行数据存入list中
+
+    # for i in range(0,lines.__len__(),1): #(开始/左边界, 结束/右边界, 步长) 
+    #     for word in lines[i].split():
+    #          word=word.strip(string.whitespace)
+    #          wordlist.append(word)
+######################################################
+    #将所有数据存入一个list中
+    f = open(filename)
+
+    tmp = f.read() #tmp为string类型
+    # wordlist = tmp.split(' ')
+    wordlist = re.split(r'[\s\!\?\,\.\"\“]',tmp)#按照空格\!\?\,\.\"将英文段落分词
+
+    print(filename)
+    print(wordlist)
+    return wordlist
+```
+
+##### 6.2  读取两个txt文件，并比较得出相同的地方，连续重复单词数超过6个就报警
+
+```python
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+#By Jack_Fu
+
+import string
+import re
+
+#读取txt,返回单词list
+def readtxt(filename='studentversion.txt'):
+    #将所有数据存入一个list中
+    f = open(filename)
+
+    tmp = f.read()
+    # wordlist = tmp.split(' ')
+    wordlist = re.split(r'[\s\!\?\,\.\"\“]',tmp)
+
+    print(filename)
+    print(wordlist)
+    return wordlist
+
+
+def main():
+    curfile = readtxt('student_version.txt')
+    orifile = readtxt('original_version.txt')
+
+    for i,j in enumerate(curfile):
+        print(i,j)
+        for m,n in enumerate(orifile):
+            num = 0
+            copyword = []
+            if j == n:
+                while curfile[i:i+num+1] == orifile[m:m+num+1] and i+num+1 < len(curfile) and m+num+1 < len(orifile):
+                    num += 1
+                    # if i+num+1 == len(curfile) or m+num+1 == len(orifile):
+                    #     break
+                if num > 6:
+                    print("这里有抄袭，连续重复字数为：",num)
+                    print(curfile[i:i+num])
+                    break
+
+if __name__ == '__main__':
+    main()
+```
+
+
+
