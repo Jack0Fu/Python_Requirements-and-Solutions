@@ -10,7 +10,54 @@ a = [1,2,3]
 len(a)
 ```
 
+##### 0.2 对列表去重
+
+/#list  #去重
+
+reference：  https://m.pythontab.com/article/1194
+
+**不能保证顺序**:
+
+```python
+#方法1：利用set
+original_list = [1,3,2,2,1,4]
+formal_list = list(set(original_list))
+#formal_list = [1, 2, 3, 4]
+```
+
+```python 
+#方法2：利用keys()
+original_list = [1,3,2,2,1,4]
+formal_list = list({}.fromkeys(original_list).keys())
+#formal_list = [1, 2, 3, 4]
+```
+
+**保证顺序：**
+
+```python 
+#方法1：遍历
+original_list = [1,3,2,2,1,4]
+formal_list = []
+for obj in original_list:
+    if obj not in formal_list:
+    	formal_list.append(i)
+#formal_list = [1, 3, 2, 4]
+```
+
+```python
+#方法2：利用list.index排序
+original_list = [1,3,2,2,1,4]
+formal_list = list(set(original_list)) #得到[1, 2, 3, 4]
+formal_list = formal_list.sort(key = original_list.index) #利用original_list.index进行重新排序，list.index(obj)返回list中obj第一个匹配项的索引位置
+#formal_list = [1, 3, 2, 4]
+```
+
+
+
+
+
 #### 1. OpenCV
+
 ##### 1.1 OpenCV 图片文件路径中有中文字符，导致读写错误
    /# opencv #imread  #imwrite # 中文字符 
 ```python
@@ -68,7 +115,12 @@ a.size #返回6
 row, column = a.shape #返回(2,3)
 ```
 
+#####   3.2  np.flatnonzero()
+
+
+
 #### 4.  os
+
 ##### 4.1  os
 /#os #合并文件路径 
 ```python
